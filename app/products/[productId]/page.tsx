@@ -1,9 +1,10 @@
 import largeData from '@/src/mock/large/products.json';
 import smallData from '@/src/mock/small/products.json';
 
-const productDetail = ({ params }: { params: { productId: string } }) => {
+const productDetail = async ({ params }: { params: Promise<{ productId: string }> }) => {
+  const resolvedParams = await params;
   const data = [...largeData, ...smallData];
-  const product = data.find((item) => item.id === params.productId);
+  const product = data.find((item) => item.id === resolvedParams.productId);
   if (!product) {
     return <p>Product not Found</p>;
   }
